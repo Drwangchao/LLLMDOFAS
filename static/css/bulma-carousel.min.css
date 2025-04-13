@@ -1,0 +1,243 @@
+/* 定义旋转动画 spinAround */
+@-webkit-keyframes spinAround {
+    from {
+      -webkit-transform: rotate(0);
+      transform: rotate(0);
+    }
+    to {
+      -webkit-transform: rotate(359deg);
+      transform: rotate(359deg);
+    }
+  }
+  @keyframes spinAround {
+    from {
+      -webkit-transform: rotate(0);
+      transform: rotate(0);
+    }
+    to {
+      -webkit-transform: rotate(359deg);
+      transform: rotate(359deg);
+    }
+  }
+  
+  /* slider 容器 */
+  .slider {
+    position: relative;
+    width: 100%;
+  }
+  
+  /* slider 的内容区域 */
+  .slider-container {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row; /* 默认横向滑动 */
+    overflow: hidden;
+    -webkit-transform: translate3d(0,0,0); /* 提高性能 */
+    transform: translate3d(0,0,0);
+    min-height: 100%;
+  }
+  
+  /* 垂直方向滑动时使用的样式 */
+  .slider-container.is-vertical {
+    flex-direction: column;
+  }
+  
+  /* 每个滑块项目 */
+  .slider-container .slider-item {
+    flex: none; /* 不自动伸缩，固定宽度/高度 */
+  }
+  
+  /* 被覆盖模式的图像填充方式 */
+  .slider-container .slider-item .image.is-covered img {
+    -o-object-fit: cover;
+    object-fit: cover; /* 图片裁剪以填满容器 */
+    -o-object-position: center center;
+    object-position: center center;
+    height: 100%;
+    width: 100%;
+  }
+  
+  /* 视频容器：用于响应式宽高比 */
+  .slider-container .slider-item .video-container {
+    height: 0;
+    padding-bottom: 0;
+    padding-top: 56.25%; /* 16:9比例 */
+    margin: 0;
+    position: relative;
+  }
+  
+  /* 视频容器的其他比例支持 */
+  .slider-container .slider-item .video-container.is-1by1,
+  .slider-container .slider-item .video-container.is-square {
+    padding-top: 100%; /* 1:1 */
+  }
+  .slider-container .slider-item .video-container.is-4by3 {
+    padding-top: 75%; /* 4:3 */
+  }
+  .slider-container .slider-item .video-container.is-21by9 {
+    padding-top: 42.857143%; /* 21:9 */
+  }
+  
+  /* 视频嵌入内容撑满整个容器 */
+  .slider-container .slider-item .video-container embed,
+  .slider-container .slider-item .video-container iframe,
+  .slider-container .slider-item .video-container object {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+  }
+  
+  /* 左右导航按钮 */
+  .slider-navigation-next,
+  .slider-navigation-previous {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    width: 42px;
+    height: 42px;
+    background: #fff center center no-repeat;
+    background-size: 20px 20px;
+    border: 1px solid #fff;
+    border-radius: 25091983px; /* 实现圆形按钮（巧妙的用大数字） */
+    box-shadow: 0 2px 5px #3232321a;
+    top: 50%;
+    margin-top: -20px;
+    left: 0;
+    cursor: pointer;
+    transition: transform .3s, opacity .3s, -webkit-transform .3s;
+  }
+  
+  /* 鼠标悬停时放大效果 */
+  .slider-navigation-next:hover,
+  .slider-navigation-previous:hover {
+    -webkit-transform: scale(1.2);
+    transform: scale(1.2);
+  }
+  
+  /* 隐藏导航按钮 */
+  .slider-navigation-next.is-hidden,
+  .slider-navigation-previous.is-hidden {
+    display: none;
+    opacity: 0;
+  }
+  
+  /* 控制按钮图标尺寸 */
+  .slider-navigation-next svg,
+  .slider-navigation-previous svg {
+    width: 25%;
+  }
+  
+  /* 右侧按钮位置调整 */
+  .slider-navigation-next {
+    left: auto;
+    right: 0;
+    background: #fff center center no-repeat;
+    background-size: 20px 20px;
+  }
+  
+  /* 分页指示器容器 */
+  .slider-pagination {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: .5rem 1rem;
+    text-align: center;
+  }
+  
+  /* 分页点样式 */
+  .slider-pagination .slider-page {
+    background: #fff;
+    width: 10px;
+    height: 10px;
+    border-radius: 25091983px; /* 圆形分页点 */
+    display: inline-block;
+    margin: 0 3px;
+    box-shadow: 0 2px 5px #3232321a;
+    transition: transform .3s, -webkit-transform .3s;
+    cursor: pointer;
+  }
+  
+  /* 激活或悬停时放大分页点 */
+  .slider-pagination .slider-page.is-active,
+  .slider-pagination .slider-page:hover {
+    -webkit-transform: scale(1.4);
+    transform: scale(1.4);
+  }
+  
+  /* 在大屏幕上显示分页 */
+  @media screen and (min-width: 800px) {
+    .slider-pagination {
+      display: flex;
+    }
+  }
+  
+  /* 用于配合 Hero 区域使用轮播的样式 */
+  .hero.has-carousel {
+    position: relative;
+  }
+  
+  /* 保证 hero 本体和 carousel 的层级关系 */
+  .hero.has-carousel + .hero-body,
+  .hero.has-carousel + .hero-footer,
+  .hero.has-carousel + .hero-head {
+    z-index: 10;
+    overflow: hidden;
+  }
+  
+  /* 轮播本体的位置填充整个区域 */
+  .hero.has-carousel .hero-carousel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    height: auto;
+    border: none;
+    margin: auto;
+    padding: 0;
+    z-index: 0;
+  }
+  
+  /* 调整轮播在 Hero 中的尺寸限制 */
+  .hero.has-carousel .hero-carousel .slider {
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    height: 100% !important;
+    max-height: 100%;
+    z-index: 0;
+  }
+  
+  /* 背景图最大高度填满容器 */
+  .hero.has-carousel .hero-carousel .slider .has-background {
+    max-height: 100%;
+  }
+  
+  /* 背景图的对象适配设置 */
+  .hero.has-carousel .hero-carousel .slider .has-background .is-background {
+    -o-object-fit: cover;
+    object-fit: cover;
+    -o-object-position: center center;
+    object-position: center center;
+    height: 100%;
+    width: 100%;
+  }
+  
+  /* Hero 内容的边距与层级 */
+  .hero.has-carousel .hero-body {
+    margin: 0 3rem;
+    z-index: 10;
+  }
+
+
+  
+  
+  
+  
