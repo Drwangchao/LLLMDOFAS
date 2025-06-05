@@ -1,0 +1,2555 @@
+[2025-03-11 16:26:35,295][root][INFO] - Workspace: E:\LLM\reevo-main\outputs\port_selection-ga\2025-03-11_16-26-35
+[2025-03-11 16:26:35,295][root][INFO] - Project Root: E:\LLM\reevo-main
+[2025-03-11 16:26:35,295][root][INFO] - Using LLM: deepseek-reasoner
+[2025-03-11 16:26:35,295][root][INFO] - Using Algorithm: reevo
+[2025-03-11 16:26:35,938][root][INFO] - Problem: port_selection
+[2025-03-11 16:26:35,938][root][INFO] - Problem description: Write a crossover function for solving the port selection optimization problem using a genetic algorithm. The problem requires selecting a subset of ports from a given set of ports to serve users, with the goal of minimizing the transmission power. The encoding uses binary encoding, where the number of binary bits equals the number of ports, and a bit value of 1 represents the selection of that port.The solution generated after the crossover must be valid.
+[2025-03-11 16:26:35,938][root][INFO] - Function name: crossover
+[2025-03-11 16:26:35,994][root][INFO] - Evaluating seed function...
+[2025-03-11 16:26:35,995][root][INFO] - Seed function code: 
+import numpy as np
+def crossover_v2(parents: np.ndarray, n_pop: int) -> np.ndarray:
+    n_parents, n_decap = parents.shape
+
+    # Split genomes into two halves
+    left_halves = parents[:, :n_decap // 2]
+    right_halves = parents[:, n_decap // 2:]
+
+    # Create parent pairs
+    parents_idx = np.stack([np.random.choice(range(n_parents), 2, replace=False) for _ in range(n_pop)])
+    parents_left = left_halves[parents_idx[:, 0]]
+    parents_right = right_halves[parents_idx[:, 1]]
+
+    # Create offspring
+    offspring = np.concatenate([parents_left, parents_right], axis=1)
+    return offspring
+[2025-03-11 16:26:35,995][root][INFO] - Iteration 0: Running Code 0
+[2025-03-11 16:26:38,776][root][INFO] - Iteration 0: Code Run 0 successful!
+[2025-03-11 18:10:46,318][root][INFO] - Iteration 0, response_id 0: Objective value: 2.0423479401797873
+[2025-03-11 18:10:46,319][root][INFO] - Iteration 0: Elitist: 2.0423479401797873
+[2025-03-11 18:10:46,319][root][INFO] - Iteration 0 finished...
+[2025-03-11 18:10:46,319][root][INFO] - Best obj: 2.0423479401797873, Best Code Path: problem_iter0_code0.py
+[2025-03-11 18:10:46,319][root][INFO] - Function Evals: 1
+[2025-03-11 18:10:46,319][root][INFO] - Initial Population Prompt: 
+System Prompt: 
+You are an expert in the domain of optimization heuristics. Your task is to design heuristics that can effectively solve optimization problems.
+Your response outputs Python code and nothing else. Format your code as a Python code string: "```python ... ```".
+
+User Prompt: 
+Write a crossover function for Write a crossover function for solving the port selection optimization problem using a genetic algorithm. The problem requires selecting a subset of ports from a given set of ports to serve users, with the goal of minimizing the transmission power. The encoding uses binary encoding, where the number of binary bits equals the number of ports, and a bit value of 1 represents the selection of that port.The solution generated after the crossover must be valid.
+The `crossover` function takes as input a 2D NumPy array parents and an integer n_pop. The function performs a genetic crossover operation on parents to generate n_pop offspring. Use vectorized implementation if possible.
+
+def crossover_v1(parents: np.ndarray, n_pop: int) -> np.ndarray:
+    n_parents, n_decap = parents.shape
+
+    # Split genomes into two halves
+    left_halves = parents[:, :n_decap // 2]
+    right_halves = parents[:, n_decap // 2:]
+
+    # Create parent pairs
+    parents_idx = np.stack([np.random.choice(range(n_parents), 2, replace=False) for _ in range(n_pop)])
+    parents_left = left_halves[parents_idx[:, 0]]
+    parents_right = right_halves[parents_idx[:, 1]]
+
+    # Create offspring
+    offspring = np.concatenate([parents_left, parents_right], axis=1)
+    return offspring
+
+Refer to the format of a trivial design above. Be very creative and give `crossover_v2`. Output code only and enclose your code with Python code block: ```python ... ```.
+
+
+[2025-03-11 18:10:46,689][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-11 18:10:46,713][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-11 18:10:46,717][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-11 18:10:46,936][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-11 18:10:46,967][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-11 18:10:46,976][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-11 18:10:47,161][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-11 18:10:47,390][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-11 18:10:47,421][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-11 18:10:47,451][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-11 18:20:47,472][utils.llm_client.base][ERROR] - Expecting value: line 10 column 1 (char 9)
+Traceback (most recent call last):
+  File "E:\LLM\reevo-main\utils\llm_client\base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\LLM\reevo-main\utils\llm_client\openai.py", line 33, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_utils\_utils.py", line 271, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\resources\chat\completions.py", line 648, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1167, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 856, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 949, in _request
+    return self._process_response(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1043, in _process_response
+    return api_response.parse()
+           ^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 242, in parse
+    parsed = self._parse()
+             ^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 221, in _parse
+    data = response.json()
+           ^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\httpx\_models.py", line 762, in json
+    return jsonlib.loads(self.content, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 10 column 1 (char 9)
+[2025-03-11 18:20:47,557][utils.llm_client.base][INFO] - Attempt 1 failed with error: Expecting value: line 10 column 1 (char 9)
+[2025-03-11 18:20:48,643][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-11 18:22:20,946][root][INFO] - Iteration 1: Running Code 0
+[2025-03-11 18:22:23,496][root][INFO] - Iteration 1: Code Run 0 execution error!
+[2025-03-11 18:22:23,496][root][INFO] - Iteration 1: Running Code 1
+[2025-03-11 18:22:26,012][root][INFO] - Iteration 1: Code Run 1 successful!
+[2025-03-11 18:22:26,012][root][INFO] - Iteration 1: Running Code 2
+[2025-03-11 18:22:28,642][root][INFO] - Iteration 1: Code Run 2 successful!
+[2025-03-11 18:22:28,643][root][INFO] - Iteration 1: Running Code 3
+[2025-03-11 18:22:31,734][root][INFO] - Iteration 1: Code Run 3 successful!
+[2025-03-11 18:22:31,734][root][INFO] - Iteration 1: Running Code 4
+[2025-03-11 18:22:34,811][root][INFO] - Iteration 1: Code Run 4 successful!
+[2025-03-11 18:22:34,811][root][INFO] - Iteration 1: Running Code 5
+[2025-03-11 18:22:38,105][root][INFO] - Iteration 1: Code Run 5 successful!
+[2025-03-11 18:22:38,107][root][INFO] - Iteration 1: Running Code 6
+[2025-03-11 18:22:41,689][root][INFO] - Iteration 1: Code Run 6 successful!
+[2025-03-11 18:22:41,689][root][INFO] - Iteration 1: Running Code 7
+[2025-03-11 18:22:46,133][root][INFO] - Iteration 1: Code Run 7 successful!
+[2025-03-11 18:22:46,133][root][INFO] - Iteration 1: Running Code 8
+[2025-03-11 18:22:50,391][root][INFO] - Iteration 1: Code Run 8 successful!
+[2025-03-11 18:22:50,391][root][INFO] - Iteration 1: Running Code 9
+[2025-03-11 18:22:55,020][root][INFO] - Iteration 1: Code Run 9 successful!
+[2025-03-11 18:22:55,020][root][INFO] - Iteration 1, response_id 0: Objective value: inf
+[2025-03-11 21:09:35,069][root][INFO] - Error for response_id 1: Command '['python', '-u', 'E:\\LLM\\reevo-main/problems/port_selection/eval.py', '0', 'E:\\LLM\\reevo-main', 'train']' timed out after 10000.0 seconds
+[2025-03-11 21:54:46,891][root][INFO] - Iteration 1, response_id 2: Objective value: 1.995581142279382
+[2025-03-11 21:54:57,343][root][INFO] - Iteration 1, response_id 3: Objective value: 2.0270912576631654
+[2025-03-11 21:55:16,483][root][INFO] - Iteration 1, response_id 4: Objective value: 2.0170657965147654
+[2025-03-11 21:55:16,494][root][INFO] - Iteration 1, response_id 5: Objective value: 1.9969922285849022
+[2025-03-11 21:55:16,502][root][INFO] - Iteration 1, response_id 6: Objective value: 2.042881976773094
+[2025-03-11 21:55:16,503][root][INFO] - Iteration 1, response_id 7: Objective value: 1.9532579706923479
+[2025-03-11 21:55:48,792][root][INFO] - Iteration 1, response_id 8: Objective value: 1.9969922285849022
+[2025-03-11 21:55:48,792][root][INFO] - Iteration 1, response_id 9: Objective value: 1.995581142279382
+[2025-03-11 21:55:48,793][root][INFO] - Iteration 1: Elitist: 1.9532579706923479
+[2025-03-11 21:55:48,793][root][INFO] - Iteration 1 finished...
+[2025-03-11 21:55:48,793][root][INFO] - Best obj: 1.9532579706923479, Best Code Path: problem_iter1_code7.py
+[2025-03-11 21:55:48,794][root][INFO] - Function Evals: 11
+[2025-03-11 21:55:48,803][root][INFO] - Short-term Reflection Prompt: 
+System Prompt: 
+You are an expert in the domain of optimization heuristics. Your task is to give hints to design better heuristics.
+
+User Prompt: 
+Below are two crossover functions for Write a crossover function for solving the port selection optimization problem using a genetic algorithm. The problem requires selecting a subset of ports from a given set of ports to serve users, with the goal of minimizing the transmission power. The encoding uses binary encoding, where the number of binary bits equals the number of ports, and a bit value of 1 represents the selection of that port.The solution generated after the crossover must be valid.
+The `crossover` function takes as input a 2D NumPy array parents and an integer n_pop. The function performs a genetic crossover operation on parents to generate n_pop offspring. Use vectorized implementation if possible.
+
+You are provided with two code versions below, where the second version performs better than the first one.
+
+[Worse code]
+
+    n_parents, n_decap = parents.shape
+    # Create parent pairs with distinct indices using vectorized approach
+    first_parent = np.random.randint(0, n_parents, n_pop)
+    second_parent = (first_parent + np.random.randint(1, n_parents, n_pop)) % n_parents
+    parent_pairs = np.column_stack((first_parent, second_parent))
+    
+    # Extract parent genomes using advanced indexing
+    parents_a = parents[parent_pairs[:, 0]]
+    parents_b = parents[parent_pairs[:, 1]]
+    
+    # Create random crossover mask with probability weights
+    crossover_probs = np.random.uniform(0.4, 0.6, (n_pop, n_decap))  # Biased uniform crossover
+    mask = np.random.rand(n_pop, n_decap) < crossover_probs
+    
+    # Perform element-wise crossover using the probabilistic mask
+    offspring = np.where(mask, parents_a, parents_b)
+    
+    # Ensure at least one port is selected (problem-specific validity)
+    all_zero = (offspring.sum(axis=1) == 0)
+    offspring[all_zero] = parents[np.random.choice(n_parents, np.sum(all_zero))]
+    
+    return offspring
+
+[Better code]
+
+    n_parents, n_decap = parents.shape
+    # Random parent pair indices for each offspring
+    parent_pairs = np.random.randint(0, n_parents, size=(n_pop, 2))
+    # Create mask with 50% chance for each parent's gene
+    mask = np.random.random(size=(n_pop, n_decap)) < 0.5
+    # Vectorized selection using mask
+    offspring = np.where(mask, parents[parent_pairs[:, 0]], parents[parent_pairs[:, 1]])
+    return offspring
+
+You respond with some hints for designing better heuristics, based on the two code versions and using less than 20 words.
+[2025-03-11 21:55:49,082][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-11 21:55:49,129][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-11 21:55:49,148][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-11 21:55:49,339][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-11 21:55:49,426][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-11 21:55:49,608][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-11 21:55:49,807][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-11 21:55:49,847][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-11 21:55:49,883][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-11 21:55:49,979][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-11 22:05:49,141][utils.llm_client.base][ERROR] - Expecting value: line 10 column 1 (char 9)
+Traceback (most recent call last):
+  File "E:\LLM\reevo-main\utils\llm_client\base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\LLM\reevo-main\utils\llm_client\openai.py", line 33, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_utils\_utils.py", line 271, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\resources\chat\completions.py", line 648, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1167, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 856, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 949, in _request
+    return self._process_response(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1043, in _process_response
+    return api_response.parse()
+           ^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 242, in parse
+    parsed = self._parse()
+             ^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 221, in _parse
+    data = response.json()
+           ^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\httpx\_models.py", line 762, in json
+    return jsonlib.loads(self.content, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 10 column 1 (char 9)
+[2025-03-11 22:05:49,144][utils.llm_client.base][INFO] - Attempt 1 failed with error: Expecting value: line 10 column 1 (char 9)
+[2025-03-11 22:05:49,157][utils.llm_client.base][ERROR] - Expecting value: line 10 column 1 (char 9)
+Traceback (most recent call last):
+  File "E:\LLM\reevo-main\utils\llm_client\base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\LLM\reevo-main\utils\llm_client\openai.py", line 33, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_utils\_utils.py", line 271, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\resources\chat\completions.py", line 648, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1167, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 856, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 949, in _request
+    return self._process_response(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1043, in _process_response
+    return api_response.parse()
+           ^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 242, in parse
+    parsed = self._parse()
+             ^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 221, in _parse
+    data = response.json()
+           ^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\httpx\_models.py", line 762, in json
+    return jsonlib.loads(self.content, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 10 column 1 (char 9)
+[2025-03-11 22:05:49,159][utils.llm_client.base][INFO] - Attempt 1 failed with error: Expecting value: line 10 column 1 (char 9)
+[2025-03-11 22:05:49,614][utils.llm_client.base][ERROR] - Expecting value: line 10 column 1 (char 9)
+Traceback (most recent call last):
+  File "E:\LLM\reevo-main\utils\llm_client\base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\LLM\reevo-main\utils\llm_client\openai.py", line 33, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_utils\_utils.py", line 271, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\resources\chat\completions.py", line 648, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1167, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 856, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 949, in _request
+    return self._process_response(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1043, in _process_response
+    return api_response.parse()
+           ^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 242, in parse
+    parsed = self._parse()
+             ^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 221, in _parse
+    data = response.json()
+           ^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\httpx\_models.py", line 762, in json
+    return jsonlib.loads(self.content, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 10 column 1 (char 9)
+[2025-03-11 22:05:49,618][utils.llm_client.base][INFO] - Attempt 1 failed with error: Expecting value: line 10 column 1 (char 9)
+[2025-03-11 22:05:49,995][utils.llm_client.base][ERROR] - Expecting value: line 10 column 1 (char 9)
+Traceback (most recent call last):
+  File "E:\LLM\reevo-main\utils\llm_client\base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\LLM\reevo-main\utils\llm_client\openai.py", line 33, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_utils\_utils.py", line 271, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\resources\chat\completions.py", line 648, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1167, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 856, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 949, in _request
+    return self._process_response(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1043, in _process_response
+    return api_response.parse()
+           ^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 242, in parse
+    parsed = self._parse()
+             ^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 221, in _parse
+    data = response.json()
+           ^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\httpx\_models.py", line 762, in json
+    return jsonlib.loads(self.content, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 10 column 1 (char 9)
+[2025-03-11 22:05:49,998][utils.llm_client.base][INFO] - Attempt 1 failed with error: Expecting value: line 10 column 1 (char 9)
+[2025-03-11 22:05:50,255][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-11 22:05:50,264][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-11 22:05:50,745][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-11 22:05:51,132][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-11 22:09:12,383][root][INFO] - Crossover Prompt: 
+System Prompt: 
+You are an expert in the domain of optimization heuristics. Your task is to design heuristics that can effectively solve optimization problems.
+Your response outputs Python code and nothing else. Format your code as a Python code string: "```python ... ```".
+
+User Prompt: 
+Write a crossover function for Write a crossover function for solving the port selection optimization problem using a genetic algorithm. The problem requires selecting a subset of ports from a given set of ports to serve users, with the goal of minimizing the transmission power. The encoding uses binary encoding, where the number of binary bits equals the number of ports, and a bit value of 1 represents the selection of that port.The solution generated after the crossover must be valid.
+The `crossover` function takes as input a 2D NumPy array parents and an integer n_pop. The function performs a genetic crossover operation on parents to generate n_pop offspring. Use vectorized implementation if possible.
+
+
+[Worse code]
+def crossover_v0(parents: np.ndarray, n_pop: int) -> np.ndarray:
+
+    n_parents, n_decap = parents.shape
+    # Create parent pairs with distinct indices using vectorized approach
+    first_parent = np.random.randint(0, n_parents, n_pop)
+    second_parent = (first_parent + np.random.randint(1, n_parents, n_pop)) % n_parents
+    parent_pairs = np.column_stack((first_parent, second_parent))
+    
+    # Extract parent genomes using advanced indexing
+    parents_a = parents[parent_pairs[:, 0]]
+    parents_b = parents[parent_pairs[:, 1]]
+    
+    # Create random crossover mask with probability weights
+    crossover_probs = np.random.uniform(0.4, 0.6, (n_pop, n_decap))  # Biased uniform crossover
+    mask = np.random.rand(n_pop, n_decap) < crossover_probs
+    
+    # Perform element-wise crossover using the probabilistic mask
+    offspring = np.where(mask, parents_a, parents_b)
+    
+    # Ensure at least one port is selected (problem-specific validity)
+    all_zero = (offspring.sum(axis=1) == 0)
+    offspring[all_zero] = parents[np.random.choice(n_parents, np.sum(all_zero))]
+    
+    return offspring
+
+[Better code]
+def crossover_v1(parents: np.ndarray, n_pop: int) -> np.ndarray:
+
+    n_parents, n_decap = parents.shape
+    # Random parent pair indices for each offspring
+    parent_pairs = np.random.randint(0, n_parents, size=(n_pop, 2))
+    # Create mask with 50% chance for each parent's gene
+    mask = np.random.random(size=(n_pop, n_decap)) < 0.5
+    # Vectorized selection using mask
+    offspring = np.where(mask, parents[parent_pairs[:, 0]], parents[parent_pairs[:, 1]])
+    return offspring
+
+[Reflection]
+Uniform crossover (50% per gene) and unrestricted parent selection enhance diversity and efficiency.
+
+[Improved code]
+Please write an improved function `crossover_v2`, according to the reflection. Output code only and enclose your code with Python code block: ```python ... ```.
+[2025-03-11 22:09:12,689][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-11 22:09:12,896][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-11 22:09:12,979][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-11 22:09:12,991][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-11 22:09:13,014][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-11 22:09:13,117][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-11 22:09:13,349][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-11 22:09:13,412][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-11 22:09:13,454][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-11 22:09:13,490][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-11 22:19:13,008][utils.llm_client.base][ERROR] - Expecting value: line 10 column 1 (char 9)
+Traceback (most recent call last):
+  File "E:\LLM\reevo-main\utils\llm_client\base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\LLM\reevo-main\utils\llm_client\openai.py", line 33, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_utils\_utils.py", line 271, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\resources\chat\completions.py", line 648, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1167, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 856, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 949, in _request
+    return self._process_response(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1043, in _process_response
+    return api_response.parse()
+           ^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 242, in parse
+    parsed = self._parse()
+             ^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 221, in _parse
+    data = response.json()
+           ^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\httpx\_models.py", line 762, in json
+    return jsonlib.loads(self.content, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 10 column 1 (char 9)
+[2025-03-11 22:19:13,013][utils.llm_client.base][INFO] - Attempt 1 failed with error: Expecting value: line 10 column 1 (char 9)
+[2025-03-11 22:19:13,035][utils.llm_client.base][ERROR] - Expecting value: line 10 column 1 (char 9)
+Traceback (most recent call last):
+  File "E:\LLM\reevo-main\utils\llm_client\base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\LLM\reevo-main\utils\llm_client\openai.py", line 33, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_utils\_utils.py", line 271, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\resources\chat\completions.py", line 648, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1167, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 856, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 949, in _request
+    return self._process_response(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1043, in _process_response
+    return api_response.parse()
+           ^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 242, in parse
+    parsed = self._parse()
+             ^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 221, in _parse
+    data = response.json()
+           ^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\httpx\_models.py", line 762, in json
+    return jsonlib.loads(self.content, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 10 column 1 (char 9)
+[2025-03-11 22:19:13,036][utils.llm_client.base][INFO] - Attempt 1 failed with error: Expecting value: line 10 column 1 (char 9)
+[2025-03-11 22:19:13,132][utils.llm_client.base][ERROR] - Expecting value: line 10 column 1 (char 9)
+Traceback (most recent call last):
+  File "E:\LLM\reevo-main\utils\llm_client\base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\LLM\reevo-main\utils\llm_client\openai.py", line 33, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_utils\_utils.py", line 271, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\resources\chat\completions.py", line 648, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1167, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 856, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 949, in _request
+    return self._process_response(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1043, in _process_response
+    return api_response.parse()
+           ^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 242, in parse
+    parsed = self._parse()
+             ^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 221, in _parse
+    data = response.json()
+           ^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\httpx\_models.py", line 762, in json
+    return jsonlib.loads(self.content, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 10 column 1 (char 9)
+[2025-03-11 22:19:13,133][utils.llm_client.base][INFO] - Attempt 1 failed with error: Expecting value: line 10 column 1 (char 9)
+[2025-03-11 22:19:13,362][utils.llm_client.base][ERROR] - Expecting value: line 10 column 1 (char 9)
+Traceback (most recent call last):
+  File "E:\LLM\reevo-main\utils\llm_client\base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\LLM\reevo-main\utils\llm_client\openai.py", line 33, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_utils\_utils.py", line 271, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\resources\chat\completions.py", line 648, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1167, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 856, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 949, in _request
+    return self._process_response(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1043, in _process_response
+    return api_response.parse()
+           ^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 242, in parse
+    parsed = self._parse()
+             ^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 221, in _parse
+    data = response.json()
+           ^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\httpx\_models.py", line 762, in json
+    return jsonlib.loads(self.content, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 10 column 1 (char 9)
+[2025-03-11 22:19:13,363][utils.llm_client.base][INFO] - Attempt 1 failed with error: Expecting value: line 10 column 1 (char 9)
+[2025-03-11 22:19:13,467][utils.llm_client.base][ERROR] - Expecting value: line 10 column 1 (char 9)
+Traceback (most recent call last):
+  File "E:\LLM\reevo-main\utils\llm_client\base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\LLM\reevo-main\utils\llm_client\openai.py", line 33, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_utils\_utils.py", line 271, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\resources\chat\completions.py", line 648, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1167, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 856, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 949, in _request
+    return self._process_response(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1043, in _process_response
+    return api_response.parse()
+           ^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 242, in parse
+    parsed = self._parse()
+             ^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 221, in _parse
+    data = response.json()
+           ^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\httpx\_models.py", line 762, in json
+    return jsonlib.loads(self.content, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 10 column 1 (char 9)
+[2025-03-11 22:19:13,471][utils.llm_client.base][INFO] - Attempt 1 failed with error: Expecting value: line 10 column 1 (char 9)
+[2025-03-11 22:19:13,485][utils.llm_client.base][ERROR] - Expecting value: line 10 column 1 (char 9)
+Traceback (most recent call last):
+  File "E:\LLM\reevo-main\utils\llm_client\base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\LLM\reevo-main\utils\llm_client\openai.py", line 33, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_utils\_utils.py", line 271, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\resources\chat\completions.py", line 648, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1167, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 856, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 949, in _request
+    return self._process_response(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1043, in _process_response
+    return api_response.parse()
+           ^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 242, in parse
+    parsed = self._parse()
+             ^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 221, in _parse
+    data = response.json()
+           ^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\httpx\_models.py", line 762, in json
+    return jsonlib.loads(self.content, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 10 column 1 (char 9)
+[2025-03-11 22:19:13,487][utils.llm_client.base][INFO] - Attempt 1 failed with error: Expecting value: line 10 column 1 (char 9)
+[2025-03-11 22:19:14,122][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-11 22:19:14,153][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-11 22:19:14,263][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-11 22:19:14,516][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-11 22:19:14,613][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-11 22:19:14,616][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-11 22:29:14,135][utils.llm_client.base][ERROR] - Expecting value: line 10 column 1 (char 9)
+Traceback (most recent call last):
+  File "E:\LLM\reevo-main\utils\llm_client\base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\LLM\reevo-main\utils\llm_client\openai.py", line 33, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_utils\_utils.py", line 271, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\resources\chat\completions.py", line 648, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1167, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 856, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 949, in _request
+    return self._process_response(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1043, in _process_response
+    return api_response.parse()
+           ^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 242, in parse
+    parsed = self._parse()
+             ^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 221, in _parse
+    data = response.json()
+           ^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\httpx\_models.py", line 762, in json
+    return jsonlib.loads(self.content, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 10 column 1 (char 9)
+[2025-03-11 22:29:14,136][utils.llm_client.base][INFO] - Attempt 2 failed with error: Expecting value: line 10 column 1 (char 9)
+[2025-03-11 22:29:14,281][utils.llm_client.base][ERROR] - Expecting value: line 10 column 1 (char 9)
+Traceback (most recent call last):
+  File "E:\LLM\reevo-main\utils\llm_client\base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\LLM\reevo-main\utils\llm_client\openai.py", line 33, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_utils\_utils.py", line 271, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\resources\chat\completions.py", line 648, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1167, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 856, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 949, in _request
+    return self._process_response(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1043, in _process_response
+    return api_response.parse()
+           ^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 242, in parse
+    parsed = self._parse()
+             ^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 221, in _parse
+    data = response.json()
+           ^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\httpx\_models.py", line 762, in json
+    return jsonlib.loads(self.content, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 10 column 1 (char 9)
+[2025-03-11 22:29:14,282][utils.llm_client.base][INFO] - Attempt 2 failed with error: Expecting value: line 10 column 1 (char 9)
+[2025-03-11 22:29:14,640][utils.llm_client.base][ERROR] - Expecting value: line 10 column 1 (char 9)
+Traceback (most recent call last):
+  File "E:\LLM\reevo-main\utils\llm_client\base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\LLM\reevo-main\utils\llm_client\openai.py", line 33, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_utils\_utils.py", line 271, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\resources\chat\completions.py", line 648, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1167, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 856, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 949, in _request
+    return self._process_response(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1043, in _process_response
+    return api_response.parse()
+           ^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 242, in parse
+    parsed = self._parse()
+             ^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 221, in _parse
+    data = response.json()
+           ^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\httpx\_models.py", line 762, in json
+    return jsonlib.loads(self.content, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 10 column 1 (char 9)
+[2025-03-11 22:29:14,645][utils.llm_client.base][ERROR] - Expecting value: line 10 column 1 (char 9)
+Traceback (most recent call last):
+  File "E:\LLM\reevo-main\utils\llm_client\base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\LLM\reevo-main\utils\llm_client\openai.py", line 33, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_utils\_utils.py", line 271, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\resources\chat\completions.py", line 648, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1167, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 856, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 949, in _request
+    return self._process_response(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1043, in _process_response
+    return api_response.parse()
+           ^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 242, in parse
+    parsed = self._parse()
+             ^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 221, in _parse
+    data = response.json()
+           ^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\httpx\_models.py", line 762, in json
+    return jsonlib.loads(self.content, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 10 column 1 (char 9)
+[2025-03-11 22:29:14,651][utils.llm_client.base][INFO] - Attempt 2 failed with error: Expecting value: line 10 column 1 (char 9)
+[2025-03-11 22:29:14,654][utils.llm_client.base][INFO] - Attempt 2 failed with error: Expecting value: line 10 column 1 (char 9)
+[2025-03-11 22:29:15,265][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-11 22:29:15,456][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-11 22:29:15,793][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-11 22:29:15,794][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-11 22:39:15,797][utils.llm_client.base][ERROR] - Expecting value: line 10 column 1 (char 9)
+Traceback (most recent call last):
+  File "E:\LLM\reevo-main\utils\llm_client\base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\LLM\reevo-main\utils\llm_client\openai.py", line 33, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_utils\_utils.py", line 271, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\resources\chat\completions.py", line 648, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1167, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 856, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 949, in _request
+    return self._process_response(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1043, in _process_response
+    return api_response.parse()
+           ^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 242, in parse
+    parsed = self._parse()
+             ^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 221, in _parse
+    data = response.json()
+           ^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\httpx\_models.py", line 762, in json
+    return jsonlib.loads(self.content, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 10 column 1 (char 9)
+[2025-03-11 22:39:15,801][utils.llm_client.base][INFO] - Attempt 3 failed with error: Expecting value: line 10 column 1 (char 9)
+[2025-03-11 22:39:15,801][utils.llm_client.base][ERROR] - Expecting value: line 10 column 1 (char 9)
+Traceback (most recent call last):
+  File "E:\LLM\reevo-main\utils\llm_client\base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\LLM\reevo-main\utils\llm_client\openai.py", line 33, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_utils\_utils.py", line 271, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\resources\chat\completions.py", line 648, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1167, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 856, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 949, in _request
+    return self._process_response(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1043, in _process_response
+    return api_response.parse()
+           ^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 242, in parse
+    parsed = self._parse()
+             ^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 221, in _parse
+    data = response.json()
+           ^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\httpx\_models.py", line 762, in json
+    return jsonlib.loads(self.content, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 10 column 1 (char 9)
+[2025-03-11 22:39:15,811][utils.llm_client.base][INFO] - Attempt 3 failed with error: Expecting value: line 10 column 1 (char 9)
+[2025-03-11 22:39:16,919][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-11 22:39:16,966][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-11 22:56:04,047][root][INFO] - Iteration 2: Running Code 0
+[2025-03-11 22:56:06,671][root][INFO] - Iteration 2: Code Run 0 successful!
+[2025-03-11 22:56:06,672][root][INFO] - Iteration 2: Running Code 1
+[2025-03-11 22:56:09,428][root][INFO] - Iteration 2: Code Run 1 successful!
+[2025-03-11 22:56:09,428][root][INFO] - Iteration 2: Running Code 2
+[2025-03-11 22:56:12,656][root][INFO] - Iteration 2: Code Run 2 successful!
+[2025-03-11 22:56:12,656][root][INFO] - Iteration 2: Running Code 3
+[2025-03-11 22:56:15,757][root][INFO] - Iteration 2: Code Run 3 successful!
+[2025-03-11 22:56:15,758][root][INFO] - Iteration 2: Running Code 4
+[2025-03-11 22:56:19,198][root][INFO] - Iteration 2: Code Run 4 successful!
+[2025-03-11 22:56:19,199][root][INFO] - Iteration 2: Running Code 5
+[2025-03-11 22:56:22,963][root][INFO] - Iteration 2: Code Run 5 successful!
+[2025-03-11 22:56:22,963][root][INFO] - Iteration 2: Running Code 6
+[2025-03-11 22:56:27,343][root][INFO] - Iteration 2: Code Run 6 successful!
+[2025-03-11 22:56:27,343][root][INFO] - Iteration 2: Running Code 7
+[2025-03-11 22:56:31,464][root][INFO] - Iteration 2: Code Run 7 successful!
+[2025-03-11 22:56:31,464][root][INFO] - Iteration 2: Running Code 8
+[2025-03-11 22:56:35,808][root][INFO] - Iteration 2: Code Run 8 successful!
+[2025-03-11 22:56:35,808][root][INFO] - Iteration 2: Running Code 9
+[2025-03-11 22:56:42,636][root][INFO] - Iteration 2: Code Run 9 successful!
+[2025-03-12 00:47:10,649][root][INFO] - Iteration 2, response_id 0: Objective value: 1.9969922285849022
+[2025-03-12 00:47:10,650][root][INFO] - Iteration 2, response_id 1: Objective value: 1.9969922285849022
+[2025-03-12 00:47:11,883][root][INFO] - Iteration 2, response_id 2: Objective value: 2.0301078187907624
+[2025-03-12 00:47:11,891][root][INFO] - Iteration 2, response_id 3: Objective value: 1.9969922285849022
+[2025-03-12 00:47:11,892][root][INFO] - Iteration 2, response_id 4: Objective value: inf
+[2025-03-12 00:47:22,757][root][INFO] - Iteration 2, response_id 5: Objective value: 1.9969922285849022
+[2025-03-12 00:47:23,348][root][INFO] - Iteration 2, response_id 6: Objective value: 1.9969922285849022
+[2025-03-12 00:47:23,349][root][INFO] - Iteration 2, response_id 7: Objective value: 1.9292753033412096
+[2025-03-12 00:47:23,350][root][INFO] - Iteration 2, response_id 8: Objective value: 1.9532579706923479
+[2025-03-12 00:47:33,047][root][INFO] - Iteration 2, response_id 9: Objective value: 1.995581142279382
+[2025-03-12 00:47:33,048][root][INFO] - Iteration 2: Elitist: 1.9292753033412096
+[2025-03-12 00:47:33,048][root][INFO] - Iteration 2 finished...
+[2025-03-12 00:47:33,048][root][INFO] - Best obj: 1.9292753033412096, Best Code Path: problem_iter2_code7.py
+[2025-03-12 00:47:33,048][root][INFO] - Function Evals: 21
+[2025-03-12 00:47:33,048][root][INFO] - Long-term Reflection Prompt: 
+System Prompt: 
+You are an expert in the domain of optimization heuristics. Your task is to give hints to design better heuristics.
+
+User Prompt: 
+Below is your prior long-term reflection on designing heuristics for Write a crossover function for solving the port selection optimization problem using a genetic algorithm. The problem requires selecting a subset of ports from a given set of ports to serve users, with the goal of minimizing the transmission power. The encoding uses binary encoding, where the number of binary bits equals the number of ports, and a bit value of 1 represents the selection of that port.The solution generated after the crossover must be valid.
+
+
+Below are some newly gained insights.
+Uniform crossover (50% per gene) and unrestricted parent selection enhance diversity and efficiency.
+1. Ensure offspring validity via repair steps.  
+2. Check and fix empty port selections post-crossover.  
+3. Allow parent pairing with replacement for diversity.  
+4. Use mask-based crossover with validity guarantees.
+Hints: Ensure diverse parent pairs, avoid correlated selections, and maintain genetic diversity.
+Hints: Prefer uniform crossover over single-point for diversity. Avoid disruptive post-crossover mutations. Simplify gene selection logic.
+1. Prefer structured crossovers (e.g., two-point) over uniform for validity.  
+2. Ensure distinct parent pairs to diversify offspring.  
+3. Use vectorized masks for efficiency.  
+4. Inherit validity via crossover design, not fixes.
+Handle validity via mutation, not crossover. Avoid repair bias. Use uniform crossover for diversity.
+Hints:  
+1. Simplify crossover masks.  
+2. Avoid redundant validity checks.  
+3. Use uniform parent selection.  
+4. Prefer full vectorization.
+Use distinct parent pairs, two-point crossover, and avoid excessive random swapping.
+Use structured crossover points, maintain genetic blocks, ensure parent diversity.
+1. Prefer uniform crossover over single-point for diversity  
+2. Ensure validity constraints explicitly  
+3. Avoid destructive random modifications  
+4. Use problem-specific repair mechanisms
+
+Write constructive hints for designing better heuristics, based on prior reflections and new insights and using less than 50 words.
+[2025-03-12 00:47:33,492][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 00:48:06,582][root][INFO] - Mutation Prompt: 
+System Prompt: 
+You are an expert in the domain of optimization heuristics. Your task is to design heuristics that can effectively solve optimization problems.
+Your response outputs Python code and nothing else. Format your code as a Python code string: "```python ... ```".
+
+User Prompt: 
+Write a crossover function for Write a crossover function for solving the port selection optimization problem using a genetic algorithm. The problem requires selecting a subset of ports from a given set of ports to serve users, with the goal of minimizing the transmission power. The encoding uses binary encoding, where the number of binary bits equals the number of ports, and a bit value of 1 represents the selection of that port.The solution generated after the crossover must be valid.
+The `crossover` function takes as input a 2D NumPy array parents and an integer n_pop. The function performs a genetic crossover operation on parents to generate n_pop offspring. Use vectorized implementation if possible.
+
+
+[Prior reflection]
+**Hints:** Blend uniform crossover (diversity) with two-point validity checks. Use vectorized masks, ensure distinct parents via uniform selection. Design crossover to inherit valid gene blocks, avoiding empty solutions without repair. Prioritize structured diversity over random swaps.
+
+[Code]
+def crossover_v1(parents: np.ndarray, n_pop: int) -> np.ndarray:
+
+    n_parents, n_ports = parents.shape
+    indices = np.arange(n_ports)
+    
+    # Select distinct parent pairs using vectorized operations
+    parent_a_idx = np.random.randint(n_parents, size=n_pop)
+    parent_b_idx = np.random.randint(n_parents - 1, size=n_pop)
+    parent_b_idx += (parent_b_idx >= parent_a_idx)
+    
+    # Gather parent chromosomes
+    parent_a = parents[parent_a_idx]
+    parent_b = parents[parent_b_idx]
+    
+    # Generate two-point crossover masks
+    cross_points = np.random.randint(0, n_ports + 1, size=(n_pop, 2))
+    cross_points.sort(axis=1)
+    mask = (indices >= cross_points[:, 0, None]) & (indices < cross_points[:, 1, None])
+    
+    # Combine parent genetic material
+    offspring = np.where(mask, parent_b, parent_a)
+    return offspring.astype(np.int32)
+
+[Improved code]
+Please write a mutated function `crossover_v2`, according to the reflection. Output code only and enclose your code with Python code block: ```python ... ```.
+[2025-03-12 00:48:06,798][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 00:48:06,902][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 00:48:06,927][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 00:48:07,159][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 00:48:07,162][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 00:54:55,091][root][INFO] - Iteration 3: Running Code 0
+[2025-03-12 00:54:57,802][root][INFO] - Iteration 3: Code Run 0 successful!
+[2025-03-12 00:54:57,803][root][INFO] - Iteration 3: Running Code 1
+[2025-03-12 00:55:00,596][root][INFO] - Iteration 3: Code Run 1 successful!
+[2025-03-12 00:55:00,596][root][INFO] - Iteration 3: Running Code 2
+[2025-03-12 00:55:03,531][root][INFO] - Iteration 3: Code Run 2 successful!
+[2025-03-12 00:55:03,531][root][INFO] - Iteration 3: Running Code 3
+[2025-03-12 00:55:06,825][root][INFO] - Iteration 3: Code Run 3 successful!
+[2025-03-12 00:55:06,825][root][INFO] - Iteration 3: Running Code 4
+[2025-03-12 00:55:10,551][root][INFO] - Iteration 3: Code Run 4 successful!
+[2025-03-12 02:25:27,222][root][INFO] - Iteration 3, response_id 0: Objective value: 1.9292753033412096
+[2025-03-12 02:25:27,232][root][INFO] - Iteration 3, response_id 1: Objective value: 1.9292753033412096
+[2025-03-12 02:25:27,244][root][INFO] - Iteration 3, response_id 2: Objective value: 1.9292753033412096
+[2025-03-12 02:26:24,926][root][INFO] - Iteration 3, response_id 3: Objective value: 1.972349921668302
+[2025-03-12 02:26:24,936][root][INFO] - Iteration 3, response_id 4: Objective value: 1.972349921668302
+[2025-03-12 02:26:24,936][root][INFO] - Iteration 3 finished...
+[2025-03-12 02:26:24,936][root][INFO] - Best obj: 1.9292753033412096, Best Code Path: problem_iter2_code7.py
+[2025-03-12 02:26:24,936][root][INFO] - Function Evals: 26
+[2025-03-12 02:26:25,142][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 02:26:25,176][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 02:26:25,221][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 02:26:25,428][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 02:26:25,442][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 02:26:25,521][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 02:26:25,628][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 02:26:25,655][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 02:26:25,727][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 02:26:26,060][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 02:26:49,093][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 02:26:49,122][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 02:26:49,223][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 02:26:49,337][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 02:26:49,528][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 02:26:49,738][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 02:26:49,870][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 02:26:50,022][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 02:26:50,033][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 02:26:50,093][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 02:31:06,107][root][INFO] - Iteration 4: Running Code 0
+[2025-03-12 02:31:08,603][root][INFO] - Iteration 4: Code Run 0 successful!
+[2025-03-12 02:31:08,603][root][INFO] - Iteration 4: Running Code 1
+[2025-03-12 02:31:11,202][root][INFO] - Iteration 4: Code Run 1 successful!
+[2025-03-12 02:31:11,202][root][INFO] - Iteration 4: Running Code 2
+[2025-03-12 02:31:13,930][root][INFO] - Iteration 4: Code Run 2 successful!
+[2025-03-12 02:31:13,930][root][INFO] - Iteration 4: Running Code 3
+[2025-03-12 02:31:16,987][root][INFO] - Iteration 4: Code Run 3 successful!
+[2025-03-12 02:31:16,987][root][INFO] - Iteration 4: Running Code 4
+[2025-03-12 02:31:20,592][root][INFO] - Iteration 4: Code Run 4 successful!
+[2025-03-12 02:31:20,593][root][INFO] - Iteration 4: Running Code 5
+[2025-03-12 02:31:24,140][root][INFO] - Iteration 4: Code Run 5 successful!
+[2025-03-12 02:31:24,140][root][INFO] - Iteration 4: Running Code 6
+[2025-03-12 02:31:27,951][root][INFO] - Iteration 4: Code Run 6 successful!
+[2025-03-12 02:31:27,951][root][INFO] - Iteration 4: Running Code 7
+[2025-03-12 02:31:32,053][root][INFO] - Iteration 4: Code Run 7 successful!
+[2025-03-12 02:31:32,053][root][INFO] - Iteration 4: Running Code 8
+[2025-03-12 02:31:37,226][root][INFO] - Iteration 4: Code Run 8 successful!
+[2025-03-12 02:31:37,226][root][INFO] - Iteration 4: Running Code 9
+[2025-03-12 02:31:41,872][root][INFO] - Iteration 4: Code Run 9 successful!
+[2025-03-12 04:20:13,062][root][INFO] - Iteration 4, response_id 0: Objective value: 1.9292753033412096
+[2025-03-12 04:21:33,681][root][INFO] - Iteration 4, response_id 1: Objective value: 2.0301078187907624
+[2025-03-12 04:21:33,682][root][INFO] - Iteration 4, response_id 2: Objective value: 1.95053744215911
+[2025-03-12 04:21:33,682][root][INFO] - Iteration 4, response_id 3: Objective value: 1.972349921668302
+[2025-03-12 04:21:33,683][root][INFO] - Iteration 4, response_id 4: Objective value: 1.95556223660221
+[2025-03-12 04:21:33,683][root][INFO] - Iteration 4, response_id 5: Objective value: 1.9292753033412096
+[2025-03-12 04:21:38,807][root][INFO] - Iteration 4, response_id 6: Objective value: 2.0005663852498277
+[2025-03-12 04:21:38,808][root][INFO] - Iteration 4, response_id 7: Objective value: 1.900052093446486
+[2025-03-12 04:21:38,808][root][INFO] - Iteration 4, response_id 8: Objective value: 1.9292753033412096
+[2025-03-12 04:21:38,808][root][INFO] - Iteration 4, response_id 9: Objective value: 1.933807900563612
+[2025-03-12 04:21:38,810][root][INFO] - Iteration 4: Elitist: 1.900052093446486
+[2025-03-12 04:21:38,810][root][INFO] - Iteration 4 finished...
+[2025-03-12 04:21:38,811][root][INFO] - Best obj: 1.900052093446486, Best Code Path: problem_iter4_code7.py
+[2025-03-12 04:21:38,811][root][INFO] - Function Evals: 36
+[2025-03-12 04:21:39,807][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 04:21:58,873][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 04:21:59,010][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 04:21:59,045][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 04:21:59,283][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 04:21:59,428][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 04:26:21,026][root][INFO] - Iteration 5: Running Code 0
+[2025-03-12 04:26:23,570][root][INFO] - Iteration 5: Code Run 0 successful!
+[2025-03-12 04:26:23,570][root][INFO] - Iteration 5: Running Code 1
+[2025-03-12 04:26:26,149][root][INFO] - Iteration 5: Code Run 1 successful!
+[2025-03-12 04:26:26,149][root][INFO] - Iteration 5: Running Code 2
+[2025-03-12 04:26:28,980][root][INFO] - Iteration 5: Code Run 2 successful!
+[2025-03-12 04:26:28,980][root][INFO] - Iteration 5: Running Code 3
+[2025-03-12 04:26:32,067][root][INFO] - Iteration 5: Code Run 3 successful!
+[2025-03-12 04:26:32,067][root][INFO] - Iteration 5: Running Code 4
+[2025-03-12 04:26:35,063][root][INFO] - Iteration 5: Code Run 4 successful!
+[2025-03-12 04:26:35,072][root][INFO] - Iteration 5, response_id 0: Objective value: inf
+[2025-03-12 05:44:33,284][root][INFO] - Iteration 5, response_id 1: Objective value: 1.8608760946624543
+[2025-03-12 05:44:33,285][root][INFO] - Iteration 5, response_id 2: Objective value: inf
+[2025-03-12 05:44:43,207][root][INFO] - Iteration 5, response_id 3: Objective value: 1.9292753033412096
+[2025-03-12 05:44:51,849][root][INFO] - Iteration 5, response_id 4: Objective value: 1.9292753033412096
+[2025-03-12 05:44:51,850][root][INFO] - Iteration 5: Elitist: 1.8608760946624543
+[2025-03-12 05:44:51,850][root][INFO] - Iteration 5 finished...
+[2025-03-12 05:44:51,850][root][INFO] - Best obj: 1.8608760946624543, Best Code Path: problem_iter5_code1.py
+[2025-03-12 05:44:51,850][root][INFO] - Function Evals: 41
+[2025-03-12 05:44:52,189][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 05:44:52,267][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 05:44:52,349][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 05:44:52,425][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 05:44:52,647][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 05:44:52,655][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 05:44:52,729][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 05:44:52,730][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 05:44:52,793][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 05:44:53,028][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 05:45:34,173][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 05:45:34,349][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 05:45:34,459][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 05:45:34,509][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 05:45:34,644][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 05:45:34,677][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 05:45:34,681][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 05:45:34,714][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 05:45:34,845][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 05:45:34,988][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 05:50:38,819][root][INFO] - Iteration 6: Running Code 0
+[2025-03-12 05:50:41,372][root][INFO] - Iteration 6: Code Run 0 successful!
+[2025-03-12 05:50:41,372][root][INFO] - Iteration 6: Running Code 1
+[2025-03-12 05:50:44,032][root][INFO] - Iteration 6: Code Run 1 successful!
+[2025-03-12 05:50:44,032][root][INFO] - Iteration 6: Running Code 2
+[2025-03-12 05:50:46,838][root][INFO] - Iteration 6: Code Run 2 successful!
+[2025-03-12 05:50:46,838][root][INFO] - Iteration 6: Running Code 3
+[2025-03-12 05:50:49,847][root][INFO] - Iteration 6: Code Run 3 successful!
+[2025-03-12 05:50:49,847][root][INFO] - Iteration 6: Running Code 4
+[2025-03-12 05:50:53,143][root][INFO] - Iteration 6: Code Run 4 successful!
+[2025-03-12 05:50:53,144][root][INFO] - Iteration 6: Running Code 5
+[2025-03-12 05:50:57,230][root][INFO] - Iteration 6: Code Run 5 successful!
+[2025-03-12 05:50:57,230][root][INFO] - Iteration 6: Running Code 6
+[2025-03-12 05:51:01,033][root][INFO] - Iteration 6: Code Run 6 successful!
+[2025-03-12 05:51:01,033][root][INFO] - Iteration 6: Running Code 7
+[2025-03-12 05:51:05,085][root][INFO] - Iteration 6: Code Run 7 successful!
+[2025-03-12 05:51:05,085][root][INFO] - Iteration 6: Running Code 8
+[2025-03-12 05:51:10,251][root][INFO] - Iteration 6: Code Run 8 successful!
+[2025-03-12 05:51:10,252][root][INFO] - Iteration 6: Running Code 9
+[2025-03-12 05:51:14,947][root][INFO] - Iteration 6: Code Run 9 successful!
+[2025-03-12 07:40:35,837][root][INFO] - Iteration 6, response_id 0: Objective value: 1.8608760946624543
+[2025-03-12 07:40:46,124][root][INFO] - Iteration 6, response_id 1: Objective value: 1.9472871879600666
+[2025-03-12 07:41:19,533][root][INFO] - Iteration 6, response_id 2: Objective value: 1.95053744215911
+[2025-03-12 07:41:19,533][root][INFO] - Iteration 6, response_id 3: Objective value: 1.9292753033412096
+[2025-03-12 07:41:19,545][root][INFO] - Iteration 6, response_id 4: Objective value: 1.95053744215911
+[2025-03-12 07:41:19,546][root][INFO] - Iteration 6, response_id 5: Objective value: 1.9246795728032295
+[2025-03-12 07:42:00,244][root][INFO] - Iteration 6, response_id 6: Objective value: 2.0301078187907624
+[2025-03-12 07:42:00,245][root][INFO] - Iteration 6, response_id 7: Objective value: 1.8938454761336971
+[2025-03-12 07:42:00,246][root][INFO] - Iteration 6, response_id 8: Objective value: 1.9567465565455722
+[2025-03-12 07:42:03,946][root][INFO] - Iteration 6, response_id 9: Objective value: 2.0042286053878255
+[2025-03-12 07:42:03,947][root][INFO] - Iteration 6 finished...
+[2025-03-12 07:42:03,947][root][INFO] - Best obj: 1.8608760946624543, Best Code Path: problem_iter5_code1.py
+[2025-03-12 07:42:03,947][root][INFO] - Function Evals: 51
+[2025-03-12 07:42:05,125][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 07:43:51,182][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 07:43:51,574][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 07:43:51,574][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 07:43:51,590][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 07:43:51,849][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 07:49:05,005][root][INFO] - Iteration 7: Running Code 0
+[2025-03-12 07:49:07,522][root][INFO] - Iteration 7: Code Run 0 successful!
+[2025-03-12 07:49:07,523][root][INFO] - Iteration 7: Running Code 1
+[2025-03-12 07:49:10,123][root][INFO] - Iteration 7: Code Run 1 successful!
+[2025-03-12 07:49:10,123][root][INFO] - Iteration 7: Running Code 2
+[2025-03-12 07:49:12,892][root][INFO] - Iteration 7: Code Run 2 successful!
+[2025-03-12 07:49:12,892][root][INFO] - Iteration 7: Running Code 3
+[2025-03-12 07:49:15,848][root][INFO] - Iteration 7: Code Run 3 successful!
+[2025-03-12 07:49:15,848][root][INFO] - Iteration 7: Running Code 4
+[2025-03-12 07:49:19,129][root][INFO] - Iteration 7: Code Run 4 successful!
+[2025-03-12 09:19:06,229][root][INFO] - Iteration 7, response_id 0: Objective value: 1.8608760946624543
+[2025-03-12 09:19:06,229][root][INFO] - Iteration 7, response_id 1: Objective value: 1.9182779497877707
+[2025-03-12 09:19:06,230][root][INFO] - Iteration 7, response_id 2: Objective value: 1.9034762133741674
+[2025-03-12 09:19:06,385][root][INFO] - Iteration 7, response_id 3: Objective value: 1.9182779497877707
+[2025-03-12 09:19:06,390][root][INFO] - Iteration 7, response_id 4: Objective value: 1.9034762133741674
+[2025-03-12 09:19:06,391][root][INFO] - Iteration 7 finished...
+[2025-03-12 09:19:06,391][root][INFO] - Best obj: 1.8608760946624543, Best Code Path: problem_iter5_code1.py
+[2025-03-12 09:19:06,391][root][INFO] - Function Evals: 56
+[2025-03-12 09:19:06,647][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 09:19:06,696][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 09:19:06,711][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 09:19:06,769][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 09:19:06,805][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 09:19:06,852][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 09:19:07,258][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 09:19:07,348][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 09:19:07,505][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 09:19:07,654][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 09:23:09,133][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 09:23:09,302][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 09:23:09,411][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 09:23:09,450][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 09:23:09,656][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 09:23:09,844][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 09:23:09,925][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 09:23:10,005][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 09:23:10,176][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 09:23:10,310][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 09:33:09,308][utils.llm_client.base][ERROR] - Expecting value: line 10 column 1 (char 9)
+Traceback (most recent call last):
+  File "E:\LLM\reevo-main\utils\llm_client\base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\LLM\reevo-main\utils\llm_client\openai.py", line 33, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_utils\_utils.py", line 271, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\resources\chat\completions.py", line 648, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1167, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 856, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 949, in _request
+    return self._process_response(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1043, in _process_response
+    return api_response.parse()
+           ^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 242, in parse
+    parsed = self._parse()
+             ^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 221, in _parse
+    data = response.json()
+           ^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\httpx\_models.py", line 762, in json
+    return jsonlib.loads(self.content, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 10 column 1 (char 9)
+[2025-03-12 09:33:09,309][utils.llm_client.base][INFO] - Attempt 1 failed with error: Expecting value: line 10 column 1 (char 9)
+[2025-03-12 09:33:09,455][utils.llm_client.base][ERROR] - Expecting value: line 10 column 1 (char 9)
+Traceback (most recent call last):
+  File "E:\LLM\reevo-main\utils\llm_client\base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\LLM\reevo-main\utils\llm_client\openai.py", line 33, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_utils\_utils.py", line 271, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\resources\chat\completions.py", line 648, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1167, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 856, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 949, in _request
+    return self._process_response(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1043, in _process_response
+    return api_response.parse()
+           ^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 242, in parse
+    parsed = self._parse()
+             ^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 221, in _parse
+    data = response.json()
+           ^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\httpx\_models.py", line 762, in json
+    return jsonlib.loads(self.content, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 10 column 1 (char 9)
+[2025-03-12 09:33:09,456][utils.llm_client.base][INFO] - Attempt 1 failed with error: Expecting value: line 10 column 1 (char 9)
+[2025-03-12 09:33:09,635][utils.llm_client.base][ERROR] - Expecting value: line 10 column 1 (char 9)
+Traceback (most recent call last):
+  File "E:\LLM\reevo-main\utils\llm_client\base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\LLM\reevo-main\utils\llm_client\openai.py", line 33, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_utils\_utils.py", line 271, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\resources\chat\completions.py", line 648, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1167, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 856, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 949, in _request
+    return self._process_response(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1043, in _process_response
+    return api_response.parse()
+           ^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 242, in parse
+    parsed = self._parse()
+             ^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 221, in _parse
+    data = response.json()
+           ^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\httpx\_models.py", line 762, in json
+    return jsonlib.loads(self.content, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 10 column 1 (char 9)
+[2025-03-12 09:33:09,639][utils.llm_client.base][INFO] - Attempt 1 failed with error: Expecting value: line 10 column 1 (char 9)
+[2025-03-12 09:33:09,856][utils.llm_client.base][ERROR] - Expecting value: line 10 column 1 (char 9)
+Traceback (most recent call last):
+  File "E:\LLM\reevo-main\utils\llm_client\base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\LLM\reevo-main\utils\llm_client\openai.py", line 33, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_utils\_utils.py", line 271, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\resources\chat\completions.py", line 648, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1167, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 856, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 949, in _request
+    return self._process_response(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1043, in _process_response
+    return api_response.parse()
+           ^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 242, in parse
+    parsed = self._parse()
+             ^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 221, in _parse
+    data = response.json()
+           ^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\httpx\_models.py", line 762, in json
+    return jsonlib.loads(self.content, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 10 column 1 (char 9)
+[2025-03-12 09:33:09,858][utils.llm_client.base][INFO] - Attempt 1 failed with error: Expecting value: line 10 column 1 (char 9)
+[2025-03-12 09:33:10,007][utils.llm_client.base][ERROR] - Expecting value: line 10 column 1 (char 9)
+Traceback (most recent call last):
+  File "E:\LLM\reevo-main\utils\llm_client\base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\LLM\reevo-main\utils\llm_client\openai.py", line 33, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_utils\_utils.py", line 271, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\resources\chat\completions.py", line 648, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1167, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 856, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 949, in _request
+    return self._process_response(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1043, in _process_response
+    return api_response.parse()
+           ^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 242, in parse
+    parsed = self._parse()
+             ^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 221, in _parse
+    data = response.json()
+           ^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\httpx\_models.py", line 762, in json
+    return jsonlib.loads(self.content, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 10 column 1 (char 9)
+[2025-03-12 09:33:10,010][utils.llm_client.base][INFO] - Attempt 1 failed with error: Expecting value: line 10 column 1 (char 9)
+[2025-03-12 09:33:10,312][utils.llm_client.base][ERROR] - Expecting value: line 10 column 1 (char 9)
+Traceback (most recent call last):
+  File "E:\LLM\reevo-main\utils\llm_client\base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\LLM\reevo-main\utils\llm_client\openai.py", line 33, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_utils\_utils.py", line 271, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\resources\chat\completions.py", line 648, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1167, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 856, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 949, in _request
+    return self._process_response(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1043, in _process_response
+    return api_response.parse()
+           ^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 242, in parse
+    parsed = self._parse()
+             ^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 221, in _parse
+    data = response.json()
+           ^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\httpx\_models.py", line 762, in json
+    return jsonlib.loads(self.content, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 10 column 1 (char 9)
+[2025-03-12 09:33:10,314][utils.llm_client.base][INFO] - Attempt 1 failed with error: Expecting value: line 10 column 1 (char 9)
+[2025-03-12 09:33:10,415][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 09:33:10,599][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 09:33:10,818][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 09:33:11,017][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 09:33:11,156][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 09:33:11,454][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 09:43:10,428][utils.llm_client.base][ERROR] - Expecting value: line 10 column 1 (char 9)
+Traceback (most recent call last):
+  File "E:\LLM\reevo-main\utils\llm_client\base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\LLM\reevo-main\utils\llm_client\openai.py", line 33, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_utils\_utils.py", line 271, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\resources\chat\completions.py", line 648, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1167, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 856, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 949, in _request
+    return self._process_response(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1043, in _process_response
+    return api_response.parse()
+           ^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 242, in parse
+    parsed = self._parse()
+             ^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 221, in _parse
+    data = response.json()
+           ^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\httpx\_models.py", line 762, in json
+    return jsonlib.loads(self.content, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 10 column 1 (char 9)
+[2025-03-12 09:43:10,431][utils.llm_client.base][INFO] - Attempt 2 failed with error: Expecting value: line 10 column 1 (char 9)
+[2025-03-12 09:43:10,621][utils.llm_client.base][ERROR] - Expecting value: line 10 column 1 (char 9)
+Traceback (most recent call last):
+  File "E:\LLM\reevo-main\utils\llm_client\base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\LLM\reevo-main\utils\llm_client\openai.py", line 33, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_utils\_utils.py", line 271, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\resources\chat\completions.py", line 648, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1167, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 856, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 949, in _request
+    return self._process_response(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1043, in _process_response
+    return api_response.parse()
+           ^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 242, in parse
+    parsed = self._parse()
+             ^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 221, in _parse
+    data = response.json()
+           ^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\httpx\_models.py", line 762, in json
+    return jsonlib.loads(self.content, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 10 column 1 (char 9)
+[2025-03-12 09:43:10,624][utils.llm_client.base][INFO] - Attempt 2 failed with error: Expecting value: line 10 column 1 (char 9)
+[2025-03-12 09:43:10,914][utils.llm_client.base][ERROR] - Expecting value: line 10 column 1 (char 9)
+Traceback (most recent call last):
+  File "E:\LLM\reevo-main\utils\llm_client\base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\LLM\reevo-main\utils\llm_client\openai.py", line 33, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_utils\_utils.py", line 271, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\resources\chat\completions.py", line 648, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1167, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 856, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 949, in _request
+    return self._process_response(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1043, in _process_response
+    return api_response.parse()
+           ^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 242, in parse
+    parsed = self._parse()
+             ^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 221, in _parse
+    data = response.json()
+           ^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\httpx\_models.py", line 762, in json
+    return jsonlib.loads(self.content, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 10 column 1 (char 9)
+[2025-03-12 09:43:10,921][utils.llm_client.base][INFO] - Attempt 2 failed with error: Expecting value: line 10 column 1 (char 9)
+[2025-03-12 09:43:11,027][utils.llm_client.base][ERROR] - Expecting value: line 10 column 1 (char 9)
+Traceback (most recent call last):
+  File "E:\LLM\reevo-main\utils\llm_client\base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\LLM\reevo-main\utils\llm_client\openai.py", line 33, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_utils\_utils.py", line 271, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\resources\chat\completions.py", line 648, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1167, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 856, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 949, in _request
+    return self._process_response(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1043, in _process_response
+    return api_response.parse()
+           ^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 242, in parse
+    parsed = self._parse()
+             ^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 221, in _parse
+    data = response.json()
+           ^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\httpx\_models.py", line 762, in json
+    return jsonlib.loads(self.content, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 10 column 1 (char 9)
+[2025-03-12 09:43:11,030][utils.llm_client.base][INFO] - Attempt 2 failed with error: Expecting value: line 10 column 1 (char 9)
+[2025-03-12 09:43:11,167][utils.llm_client.base][ERROR] - Expecting value: line 10 column 1 (char 9)
+Traceback (most recent call last):
+  File "E:\LLM\reevo-main\utils\llm_client\base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\LLM\reevo-main\utils\llm_client\openai.py", line 33, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_utils\_utils.py", line 271, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\resources\chat\completions.py", line 648, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1167, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 856, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 949, in _request
+    return self._process_response(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1043, in _process_response
+    return api_response.parse()
+           ^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 242, in parse
+    parsed = self._parse()
+             ^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 221, in _parse
+    data = response.json()
+           ^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\httpx\_models.py", line 762, in json
+    return jsonlib.loads(self.content, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 10 column 1 (char 9)
+[2025-03-12 09:43:11,173][utils.llm_client.base][INFO] - Attempt 2 failed with error: Expecting value: line 10 column 1 (char 9)
+[2025-03-12 09:43:11,524][utils.llm_client.base][ERROR] - Expecting value: line 10 column 1 (char 9)
+Traceback (most recent call last):
+  File "E:\LLM\reevo-main\utils\llm_client\base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\LLM\reevo-main\utils\llm_client\openai.py", line 33, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_utils\_utils.py", line 271, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\resources\chat\completions.py", line 648, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1167, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 856, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 949, in _request
+    return self._process_response(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1043, in _process_response
+    return api_response.parse()
+           ^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 242, in parse
+    parsed = self._parse()
+             ^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 221, in _parse
+    data = response.json()
+           ^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\httpx\_models.py", line 762, in json
+    return jsonlib.loads(self.content, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 10 column 1 (char 9)
+[2025-03-12 09:43:11,525][utils.llm_client.base][INFO] - Attempt 2 failed with error: Expecting value: line 10 column 1 (char 9)
+[2025-03-12 09:43:11,642][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 09:43:11,785][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 09:43:12,041][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 09:43:12,162][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 09:43:12,312][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 09:43:12,619][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 09:53:11,656][utils.llm_client.base][ERROR] - Expecting value: line 10 column 1 (char 9)
+Traceback (most recent call last):
+  File "E:\LLM\reevo-main\utils\llm_client\base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\LLM\reevo-main\utils\llm_client\openai.py", line 33, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_utils\_utils.py", line 271, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\resources\chat\completions.py", line 648, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1167, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 856, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 949, in _request
+    return self._process_response(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1043, in _process_response
+    return api_response.parse()
+           ^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 242, in parse
+    parsed = self._parse()
+             ^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 221, in _parse
+    data = response.json()
+           ^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\httpx\_models.py", line 762, in json
+    return jsonlib.loads(self.content, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 10 column 1 (char 9)
+[2025-03-12 09:53:11,661][utils.llm_client.base][INFO] - Attempt 3 failed with error: Expecting value: line 10 column 1 (char 9)
+[2025-03-12 09:53:11,829][utils.llm_client.base][ERROR] - Expecting value: line 10 column 1 (char 9)
+Traceback (most recent call last):
+  File "E:\LLM\reevo-main\utils\llm_client\base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\LLM\reevo-main\utils\llm_client\openai.py", line 33, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_utils\_utils.py", line 271, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\resources\chat\completions.py", line 648, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1167, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 856, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 949, in _request
+    return self._process_response(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1043, in _process_response
+    return api_response.parse()
+           ^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 242, in parse
+    parsed = self._parse()
+             ^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 221, in _parse
+    data = response.json()
+           ^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\httpx\_models.py", line 762, in json
+    return jsonlib.loads(self.content, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 10 column 1 (char 9)
+[2025-03-12 09:53:11,835][utils.llm_client.base][INFO] - Attempt 3 failed with error: Expecting value: line 10 column 1 (char 9)
+[2025-03-12 09:53:12,065][utils.llm_client.base][ERROR] - Expecting value: line 10 column 1 (char 9)
+Traceback (most recent call last):
+  File "E:\LLM\reevo-main\utils\llm_client\base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\LLM\reevo-main\utils\llm_client\openai.py", line 33, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_utils\_utils.py", line 271, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\resources\chat\completions.py", line 648, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1167, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 856, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 949, in _request
+    return self._process_response(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1043, in _process_response
+    return api_response.parse()
+           ^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 242, in parse
+    parsed = self._parse()
+             ^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 221, in _parse
+    data = response.json()
+           ^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\httpx\_models.py", line 762, in json
+    return jsonlib.loads(self.content, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 10 column 1 (char 9)
+[2025-03-12 09:53:12,068][utils.llm_client.base][INFO] - Attempt 3 failed with error: Expecting value: line 10 column 1 (char 9)
+[2025-03-12 09:53:12,321][utils.llm_client.base][ERROR] - Expecting value: line 10 column 1 (char 9)
+Traceback (most recent call last):
+  File "E:\LLM\reevo-main\utils\llm_client\base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\LLM\reevo-main\utils\llm_client\openai.py", line 33, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_utils\_utils.py", line 271, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\resources\chat\completions.py", line 648, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1167, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 856, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 949, in _request
+    return self._process_response(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1043, in _process_response
+    return api_response.parse()
+           ^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 242, in parse
+    parsed = self._parse()
+             ^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 221, in _parse
+    data = response.json()
+           ^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\httpx\_models.py", line 762, in json
+    return jsonlib.loads(self.content, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 10 column 1 (char 9)
+[2025-03-12 09:53:12,322][utils.llm_client.base][INFO] - Attempt 3 failed with error: Expecting value: line 10 column 1 (char 9)
+[2025-03-12 09:53:12,667][utils.llm_client.base][ERROR] - Expecting value: line 10 column 1 (char 9)
+Traceback (most recent call last):
+  File "E:\LLM\reevo-main\utils\llm_client\base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\LLM\reevo-main\utils\llm_client\openai.py", line 33, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_utils\_utils.py", line 271, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\resources\chat\completions.py", line 648, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1167, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 856, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 949, in _request
+    return self._process_response(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1043, in _process_response
+    return api_response.parse()
+           ^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 242, in parse
+    parsed = self._parse()
+             ^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 221, in _parse
+    data = response.json()
+           ^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\httpx\_models.py", line 762, in json
+    return jsonlib.loads(self.content, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 10 column 1 (char 9)
+[2025-03-12 09:53:12,668][utils.llm_client.base][INFO] - Attempt 3 failed with error: Expecting value: line 10 column 1 (char 9)
+[2025-03-12 09:53:12,825][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 09:53:12,996][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 09:53:13,224][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 09:53:13,460][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 09:53:13,825][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 10:03:13,024][utils.llm_client.base][ERROR] - Expecting value: line 10 column 1 (char 9)
+Traceback (most recent call last):
+  File "E:\LLM\reevo-main\utils\llm_client\base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\LLM\reevo-main\utils\llm_client\openai.py", line 33, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_utils\_utils.py", line 271, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\resources\chat\completions.py", line 648, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1167, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 856, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 949, in _request
+    return self._process_response(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1043, in _process_response
+    return api_response.parse()
+           ^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 242, in parse
+    parsed = self._parse()
+             ^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 221, in _parse
+    data = response.json()
+           ^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\httpx\_models.py", line 762, in json
+    return jsonlib.loads(self.content, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 10 column 1 (char 9)
+[2025-03-12 10:03:13,025][utils.llm_client.base][INFO] - Attempt 4 failed with error: Expecting value: line 10 column 1 (char 9)
+[2025-03-12 10:03:13,481][utils.llm_client.base][ERROR] - Expecting value: line 10 column 1 (char 9)
+Traceback (most recent call last):
+  File "E:\LLM\reevo-main\utils\llm_client\base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\LLM\reevo-main\utils\llm_client\openai.py", line 33, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_utils\_utils.py", line 271, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\resources\chat\completions.py", line 648, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1167, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 856, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 949, in _request
+    return self._process_response(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1043, in _process_response
+    return api_response.parse()
+           ^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 242, in parse
+    parsed = self._parse()
+             ^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 221, in _parse
+    data = response.json()
+           ^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\httpx\_models.py", line 762, in json
+    return jsonlib.loads(self.content, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 10 column 1 (char 9)
+[2025-03-12 10:03:13,482][utils.llm_client.base][INFO] - Attempt 4 failed with error: Expecting value: line 10 column 1 (char 9)
+[2025-03-12 10:03:13,840][utils.llm_client.base][ERROR] - Expecting value: line 10 column 1 (char 9)
+Traceback (most recent call last):
+  File "E:\LLM\reevo-main\utils\llm_client\base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\LLM\reevo-main\utils\llm_client\openai.py", line 33, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_utils\_utils.py", line 271, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\resources\chat\completions.py", line 648, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1167, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 856, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 949, in _request
+    return self._process_response(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1043, in _process_response
+    return api_response.parse()
+           ^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 242, in parse
+    parsed = self._parse()
+             ^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 221, in _parse
+    data = response.json()
+           ^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\httpx\_models.py", line 762, in json
+    return jsonlib.loads(self.content, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 10 column 1 (char 9)
+[2025-03-12 10:03:13,845][utils.llm_client.base][INFO] - Attempt 4 failed with error: Expecting value: line 10 column 1 (char 9)
+[2025-03-12 10:03:14,141][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 10:03:14,635][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 10:03:15,000][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 10:13:14,158][utils.llm_client.base][ERROR] - Expecting value: line 10 column 1 (char 9)
+Traceback (most recent call last):
+  File "E:\LLM\reevo-main\utils\llm_client\base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\LLM\reevo-main\utils\llm_client\openai.py", line 33, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_utils\_utils.py", line 271, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\resources\chat\completions.py", line 648, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1167, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 856, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 949, in _request
+    return self._process_response(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1043, in _process_response
+    return api_response.parse()
+           ^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 242, in parse
+    parsed = self._parse()
+             ^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 221, in _parse
+    data = response.json()
+           ^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\httpx\_models.py", line 762, in json
+    return jsonlib.loads(self.content, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 10 column 1 (char 9)
+[2025-03-12 10:13:14,162][utils.llm_client.base][INFO] - Attempt 5 failed with error: Expecting value: line 10 column 1 (char 9)
+[2025-03-12 10:13:14,692][utils.llm_client.base][ERROR] - Expecting value: line 10 column 1 (char 9)
+Traceback (most recent call last):
+  File "E:\LLM\reevo-main\utils\llm_client\base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\LLM\reevo-main\utils\llm_client\openai.py", line 33, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_utils\_utils.py", line 271, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\resources\chat\completions.py", line 648, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1167, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 856, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 949, in _request
+    return self._process_response(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1043, in _process_response
+    return api_response.parse()
+           ^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 242, in parse
+    parsed = self._parse()
+             ^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 221, in _parse
+    data = response.json()
+           ^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\httpx\_models.py", line 762, in json
+    return jsonlib.loads(self.content, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 10 column 1 (char 9)
+[2025-03-12 10:13:14,696][utils.llm_client.base][INFO] - Attempt 5 failed with error: Expecting value: line 10 column 1 (char 9)
+[2025-03-12 10:13:15,013][utils.llm_client.base][ERROR] - Expecting value: line 10 column 1 (char 9)
+Traceback (most recent call last):
+  File "E:\LLM\reevo-main\utils\llm_client\base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\LLM\reevo-main\utils\llm_client\openai.py", line 33, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_utils\_utils.py", line 271, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\resources\chat\completions.py", line 648, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1167, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 856, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 949, in _request
+    return self._process_response(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1043, in _process_response
+    return api_response.parse()
+           ^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 242, in parse
+    parsed = self._parse()
+             ^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 221, in _parse
+    data = response.json()
+           ^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\httpx\_models.py", line 762, in json
+    return jsonlib.loads(self.content, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 10 column 1 (char 9)
+[2025-03-12 10:13:15,017][utils.llm_client.base][INFO] - Attempt 5 failed with error: Expecting value: line 10 column 1 (char 9)
+[2025-03-12 10:13:15,310][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 10:13:15,824][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 10:13:16,163][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 10:23:15,333][utils.llm_client.base][ERROR] - Expecting value: line 10 column 1 (char 9)
+Traceback (most recent call last):
+  File "E:\LLM\reevo-main\utils\llm_client\base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\LLM\reevo-main\utils\llm_client\openai.py", line 33, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_utils\_utils.py", line 271, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\resources\chat\completions.py", line 648, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1167, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 856, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 949, in _request
+    return self._process_response(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1043, in _process_response
+    return api_response.parse()
+           ^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 242, in parse
+    parsed = self._parse()
+             ^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 221, in _parse
+    data = response.json()
+           ^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\httpx\_models.py", line 762, in json
+    return jsonlib.loads(self.content, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 10 column 1 (char 9)
+[2025-03-12 10:23:15,337][utils.llm_client.base][INFO] - Attempt 6 failed with error: Expecting value: line 10 column 1 (char 9)
+[2025-03-12 10:23:16,179][utils.llm_client.base][ERROR] - Expecting value: line 10 column 1 (char 9)
+Traceback (most recent call last):
+  File "E:\LLM\reevo-main\utils\llm_client\base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\LLM\reevo-main\utils\llm_client\openai.py", line 33, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_utils\_utils.py", line 271, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\resources\chat\completions.py", line 648, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1167, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 856, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 949, in _request
+    return self._process_response(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1043, in _process_response
+    return api_response.parse()
+           ^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 242, in parse
+    parsed = self._parse()
+             ^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 221, in _parse
+    data = response.json()
+           ^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\httpx\_models.py", line 762, in json
+    return jsonlib.loads(self.content, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 10 column 1 (char 9)
+[2025-03-12 10:23:16,184][utils.llm_client.base][INFO] - Attempt 6 failed with error: Expecting value: line 10 column 1 (char 9)
+[2025-03-12 10:23:16,485][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 10:23:17,289][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 10:33:16,527][utils.llm_client.base][ERROR] - Expecting value: line 10 column 1 (char 9)
+Traceback (most recent call last):
+  File "E:\LLM\reevo-main\utils\llm_client\base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\LLM\reevo-main\utils\llm_client\openai.py", line 33, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_utils\_utils.py", line 271, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\resources\chat\completions.py", line 648, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1167, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 856, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 949, in _request
+    return self._process_response(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1043, in _process_response
+    return api_response.parse()
+           ^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 242, in parse
+    parsed = self._parse()
+             ^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 221, in _parse
+    data = response.json()
+           ^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\httpx\_models.py", line 762, in json
+    return jsonlib.loads(self.content, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 10 column 1 (char 9)
+[2025-03-12 10:33:16,531][utils.llm_client.base][INFO] - Attempt 7 failed with error: Expecting value: line 10 column 1 (char 9)
+[2025-03-12 10:33:17,303][utils.llm_client.base][ERROR] - Expecting value: line 10 column 1 (char 9)
+Traceback (most recent call last):
+  File "E:\LLM\reevo-main\utils\llm_client\base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\LLM\reevo-main\utils\llm_client\openai.py", line 33, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_utils\_utils.py", line 271, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\resources\chat\completions.py", line 648, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1167, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 856, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 949, in _request
+    return self._process_response(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_base_client.py", line 1043, in _process_response
+    return api_response.parse()
+           ^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 242, in parse
+    parsed = self._parse()
+             ^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\openai\_response.py", line 221, in _parse
+    data = response.json()
+           ^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\site-packages\httpx\_models.py", line 762, in json
+    return jsonlib.loads(self.content, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\envs\reevo\Lib\json\decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 10 column 1 (char 9)
+[2025-03-12 10:33:17,307][utils.llm_client.base][INFO] - Attempt 7 failed with error: Expecting value: line 10 column 1 (char 9)
+[2025-03-12 10:33:17,773][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 10:33:18,540][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
